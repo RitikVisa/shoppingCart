@@ -1,4 +1,4 @@
-package com.example.shoppingCart;
+package com.example.shoppingCart.models;
 import jakarta.persistence.*;
 
 @Entity

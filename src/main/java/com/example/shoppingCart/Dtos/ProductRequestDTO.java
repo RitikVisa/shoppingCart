@@ -1,4 +1,6 @@
-package com.example.shoppingCart;
+package com.example.shoppingCart.Dtos;
+
+import com.example.shoppingCart.models.Feature;
 
 public class ProductRequestDTO {
     private String name;

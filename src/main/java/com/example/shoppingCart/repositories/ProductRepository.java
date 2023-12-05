@@ -1,5 +1,6 @@
-package com.example.shoppingCart;
+package com.example.shoppingCart.repositories;
 
+import com.example.shoppingCart.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

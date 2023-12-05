@@ -1,4 +1,8 @@
-package com.example.shoppingCart;
+package com.example.shoppingCart.services;
+import com.example.shoppingCart.Dtos.ProductRequestDTO;
+import com.example.shoppingCart.models.Feature;
+import com.example.shoppingCart.models.Product;
+import com.example.shoppingCart.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
