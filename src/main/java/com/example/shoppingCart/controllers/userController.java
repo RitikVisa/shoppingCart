@@ -19,7 +19,7 @@ public class userController {
     @Autowired
     UserService userService;
     @PostMapping
-    public ResponseEntity<UserRequestDto> createUser(@RequestBody UserRequestDto userRequest) {
+    public ResponseEntity<UserRequestDto> createUser(@RequestBody User userRequest) {
 
         return userService.createUser(userRequest);
     }
@@ -28,4 +28,16 @@ public class userController {
     public List<UserRequestDto> getUser() {
         return userService.getUser();
     }
+
+    @DeleteMapping
+    public ResponseEntity<UserRequestDto> deleteUser(@RequestParam(name = "id") Integer id){
+        return userService.deleteUser(id);
+    }
+
+    @PutMapping
+    public ResponseEntity<UserRequestDto> updateUser(@RequestParam(name = "id") Integer id, @RequestBody User user){
+        return userService.updateUser(id,user);
+    }
+
+
 }

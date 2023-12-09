@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class UserService {
 
 
 
-    public ResponseEntity<UserRequestDto> createUser(@RequestBody UserRequestDto userRequest) {
+    public ResponseEntity<UserRequestDto> createUser(@RequestBody User userRequest) {
         User user = new User();
         user.setName(userRequest.getName());
         user.setEmail(userRequest.getEmail());
@@ -42,16 +43,7 @@ public class UserService {
         return new ResponseEntity<>(userDto, HttpStatus.CREATED);
     }
 
-    public UserRequestDto userToDto(User user){
 
-        UserRequestDto userDto = new UserRequestDto();
-        userDto.setId(user.getId());
-        userDto.setName(user.getName());
-        userDto.setEmail(user.getEmail());
-        userDto.setMobile(user.getMobile());
-
-        return userDto;
-    }
 
     public List<UserRequestDto> getUser() {
 
@@ -68,4 +60,57 @@ public class UserService {
 
         return userDtoList;
     }
+
+    public ResponseEntity<UserRequestDto> deleteUser(Integer id) {
+        // Check if the provided user ID is not null
+        if (id == null || id < 0) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            UserRequestDto userRequestDto = userToDto(user);
+
+            userRepository.deleteById(id);
+            return new ResponseEntity<>(userRequestDto, HttpStatus.OK);
+        }
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Provided UserId Not Found");
+    }
+
+
+
+    public ResponseEntity<UserRequestDto> updateUser( Integer id, User user) {
+        // Check if the provided user object is not null
+        if (user == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        //check if the user is present or not
+        Optional<User> userOptional = userRepository.findById(id);
+        if(userOptional.isPresent()){
+            User updatedUser = userOptional.get();
+            updatedUser.setName(user.getName());
+            updatedUser.setEmail(user.getEmail());
+            updatedUser.setMobile(user.getMobile());
+            updatedUser.setPassword(user.getPassword());
+
+            userRepository.save(updatedUser);
+            return new ResponseEntity<>(userToDto(updatedUser),HttpStatus.OK);
+        }
+
+        throw new RuntimeException("Given User Id Is Wrong Or User Not Present");
+    }
+    public UserRequestDto userToDto(User user){
+
+        UserRequestDto userDto = new UserRequestDto();
+        userDto.setId(user.getId());
+        userDto.setName(user.getName());
+        userDto.setEmail(user.getEmail());
+        userDto.setMobile(user.getMobile());
+
+        return userDto;
+    }
+
+
 }
