@@ -39,7 +39,6 @@ public class UserService {
         user.setEmail(userRequest.getEmail());
         user.setMobile(userRequest.getMobile());
         user.setPassword(userRequest.getPassword());
-        user.setCart(userRequest.getCart());
 
         Cart cart = new Cart();
         user.setCart(cart);
