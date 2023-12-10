@@ -2,6 +2,7 @@ package com.example.shoppingCart.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,39 +16,28 @@ public class Cart {
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     private List<Product> productList;
 
-    @OneToOne(mappedBy = "cart")
+    @OneToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
+    // ... constructors, getters, setters ...
+
     public Cart() {
-        // default constructor
+        this.productList = new ArrayList<>();
     }
 
-    public Cart(List<Product> productList, User user) {
-        this.productList = productList;
+    public void addProduct(Product product) {
+        productList.add(product);
+        product.setCart(this);
+    }
+
+    public void setUser(User user) {
         this.user = user;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+        user.setCart(this);
     }
 
     public List<Product> getProductList() {
         return productList;
     }
 
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

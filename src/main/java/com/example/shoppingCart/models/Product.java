@@ -27,7 +27,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;
-    // Constructors, getters, and setters
+
+    public Cart getCart() {
+        return cart;
+    }
 
     // Default constructor
     public Product() {
@@ -111,6 +114,16 @@ public class Product {
                 ", details='" + details + '\'' +
                 ", feature=" + feature +
                 '}';
+    }
+
+    public void setCart(Cart cart) {
+        if (this.cart != null) {
+            this.cart.getProductList().remove(this); // Remove itself from the previous cart's productList
+        }
+        this.cart = cart;
+        if (cart != null && !cart.getProductList().contains(this)) {
+            cart.getProductList().add(this); // Add itself to the new cart's productList
+        }
     }
 }
 

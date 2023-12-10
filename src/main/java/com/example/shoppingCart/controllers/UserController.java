@@ -40,13 +40,12 @@ public class UserController {
         return userService.updateUser(id,user);
     }
 
-    @GetMapping("/addToCart")
+    @PostMapping("/addtocart")
     public ResponseEntity<Integer> addToCart(
             @RequestParam(name = "pid") Long productId,
             @RequestParam(name = "uid") Integer userID) {
-        Integer result = userService.addToCart(productId, userID);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+            Integer result = userService.addToCart(productId,userID);
+        return new ResponseEntity<Integer>(result, HttpStatus.OK);
     }
-
 
 }
