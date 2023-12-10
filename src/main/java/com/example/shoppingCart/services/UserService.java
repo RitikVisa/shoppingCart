@@ -121,12 +121,13 @@ public class UserService {
         userDto.setName(user.getName());
         userDto.setEmail(user.getEmail());
         userDto.setMobile(user.getMobile());
+        userDto.setId(user.getId());
 
         return userDto;
     }
 
 
-@Transactional
+
 public Integer addToCart(Long productId, Integer userID) {
     // Get the product
     Product product = productRepository.findById(productId)

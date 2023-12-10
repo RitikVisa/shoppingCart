@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "\"user\"")
 public class User {
+    public Integer getId() {
+        return id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -60,10 +64,11 @@ public class User {
     public User() {
     }
 
-    public User(String name, String email, String mobile, String password) {
+    public User(String name, String email, String mobile, String password,Cart cart) {
         this.name = name;
         this.email = email;
         this.mobile = mobile;
         this.password = password;
+        this.cart=cart;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.shoppingCart.Dtos;
 
+import com.example.shoppingCart.models.Cart;
 import com.example.shoppingCart.models.User;
 
 import java.util.Optional;
@@ -24,15 +25,25 @@ public class UserRequestDto {
     }
 
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 
     private String email;
     private String mobile;
+    private Cart cart;
 
-    public UserRequestDto(Integer id, String name, String email, String mobile) {
+    public UserRequestDto(Integer id, String name, String email, String mobile, Cart cart) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.mobile = mobile;
+        this.cart =cart;
+
     }
     public UserRequestDto(String name, String email, String mobile) {
         this.name = name;

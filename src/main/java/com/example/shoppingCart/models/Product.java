@@ -19,7 +19,6 @@ public class Product {
     private String imageUrl;
     private String details;
 
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "feature_id")
     private Feature feature; // One-to-one relationship with Feature
@@ -28,21 +27,17 @@ public class Product {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    public Cart getCart() {
-        return cart;
-    }
-
     // Default constructor
     public Product() {
     }
 
-    public Product(String name, double price, double rating, String imageUrl, String details,Feature feature) {
+    public Product(String name, double price, double rating, String imageUrl, String details, Feature feature) {
         this.name = name;
         this.price = price;
         this.rating = rating;
         this.imageUrl = imageUrl;
         this.details = details;
-        this.feature= feature;
+        this.feature = feature;
     }
 
     // Getters and setters for the fields
@@ -103,6 +98,14 @@ public class Product {
         this.feature = feature;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -113,18 +116,10 @@ public class Product {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", details='" + details + '\'' +
                 ", feature=" + feature +
+                ", cart=" + cart +
                 '}';
     }
-
-    public void setCart(Cart cart) {
-        if (this.cart != null) {
-            this.cart.getProductList().remove(this); // Remove itself from the previous cart's productList
-        }
-        this.cart = cart;
-        if (cart != null && !cart.getProductList().contains(this)) {
-            cart.getProductList().add(this); // Add itself to the new cart's productList
-        }
-    }
 }
+
 
 
