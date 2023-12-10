@@ -24,6 +24,9 @@ public class Product {
     @JoinColumn(name = "feature_id")
     private Feature feature; // One-to-one relationship with Feature
 
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
     // Constructors, getters, and setters
 
     // Default constructor

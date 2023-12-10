@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*")
-public class userController {
+public class UserController {
 
     @Autowired
     UserService userService;
@@ -25,8 +25,9 @@ public class userController {
     }
 
     @GetMapping
-    public List<UserRequestDto> getUser() {
-        return userService.getUser();
+    public ResponseEntity<List<UserRequestDto>> getAllUsers() {
+        List<UserRequestDto> users = userService.getUser();
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @DeleteMapping
@@ -37,6 +38,14 @@ public class userController {
     @PutMapping
     public ResponseEntity<UserRequestDto> updateUser(@RequestParam(name = "id") Integer id, @RequestBody User user){
         return userService.updateUser(id,user);
+    }
+
+    @GetMapping("/addToCart")
+    public ResponseEntity<Integer> addToCart(
+            @RequestParam(name = "pid") Long productId,
+            @RequestParam(name = "uid") Integer userID) {
+        Integer result = userService.addToCart(productId, userID);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
 

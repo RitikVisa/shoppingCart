@@ -1,12 +1,17 @@
 package com.example.shoppingCart.services;
 
 import com.example.shoppingCart.Dtos.UserRequestDto;
+import com.example.shoppingCart.models.Cart;
+import com.example.shoppingCart.models.Product;
 import com.example.shoppingCart.models.User;
+import com.example.shoppingCart.repositories.ProductRepository;
 import com.example.shoppingCart.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,6 +25,8 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ProductRepository productRepository;
 
 
 
@@ -113,4 +120,32 @@ public class UserService {
     }
 
 
+    @Transactional
+    public Integer addToCart(Long productId, Integer userID) {
+        // Get product
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + productId));
+
+        // Get user
+        User user = userRepository.findById(userID)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userID));
+
+        // Get user's cart
+        Cart cart = user.getCart();
+        if (cart == null) {
+            cart = new Cart();
+            cart.setUser(user);
+        }
+
+        // Add product to the cart
+        List<Product> productItems = cart.getProductList();
+        productItems.add(product);
+        cart.setProductList(productItems);
+
+        // Save the updated user and cart
+        userRepository.save(user);
+
+        // Return the cart size
+        return productItems.size();
+    }
 }
