@@ -115,4 +115,9 @@ public class OrderService {
 
         throw new RuntimeException("productId is wrong");
     }
+
+    public List<Order> getOrderList() {
+
+        return orderRepository.findAll();
+    }
 }

@@ -58,5 +58,9 @@ public class UserController {
         return orderService.removeItemFromCart(uid,pid,quantity);
     }
 
+    @GetMapping("/orders")
+    public List<Order> getOrderList(){
+        return orderService.getOrderList();
+    }
 
 }
