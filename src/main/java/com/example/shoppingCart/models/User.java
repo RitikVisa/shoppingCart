@@ -1,5 +1,6 @@
 package com.example.shoppingCart.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,24 @@ public class User {
     private String name;
     private String email;
     private String mobile;
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
 
     public String getName() {
         return name;
@@ -48,18 +67,8 @@ public class User {
         this.password = password;
     }
 
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Cart cart;
 
     public User() {
     }
@@ -69,6 +78,5 @@ public class User {
         this.email = email;
         this.mobile = mobile;
         this.password = password;
-        this.cart=cart;
     }
 }

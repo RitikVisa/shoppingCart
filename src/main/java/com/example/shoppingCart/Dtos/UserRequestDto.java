@@ -13,6 +13,19 @@ public class UserRequestDto {
     private Integer id;
     private String name;
 
+    private String email;
+    private String mobile;
+
+    private String password ;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public UserRequestDto(Optional<User> user) {
     }
 
@@ -25,30 +38,26 @@ public class UserRequestDto {
     }
 
 
-    public Cart getCart() {
-        return cart;
-    }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
 
-    private String email;
-    private String mobile;
-    private Cart cart;
 
-    public UserRequestDto(Integer id, String name, String email, String mobile, Cart cart) {
+
+
+
+
+    public UserRequestDto(Integer id, String name, String email, String mobile) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.mobile = mobile;
-        this.cart =cart;
+
 
     }
-    public UserRequestDto(String name, String email, String mobile) {
+    public UserRequestDto(String name, String email, String mobile,String password) {
         this.name = name;
         this.email = email;
         this.mobile = mobile;
+        this.password = password;
     }
 
     public String getName() {

@@ -1,22 +1,17 @@
 package com.example.shoppingCart.services;
 
 import com.example.shoppingCart.Dtos.UserRequestDto;
-import com.example.shoppingCart.models.Cart;
-import com.example.shoppingCart.models.Product;
 import com.example.shoppingCart.models.User;
 import com.example.shoppingCart.repositories.ProductRepository;
 import com.example.shoppingCart.repositories.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,8 +35,6 @@ public class UserService {
         user.setMobile(userRequest.getMobile());
         user.setPassword(userRequest.getPassword());
 
-        Cart cart = new Cart();
-        user.setCart(cart);
 
 
         Optional<User> isEmailPresent = userRepository.findByEmail(user.getEmail());
@@ -122,40 +115,42 @@ public class UserService {
         userDto.setEmail(user.getEmail());
         userDto.setMobile(user.getMobile());
         userDto.setId(user.getId());
+        userDto.setPassword(user.getPassword());
+
 
         return userDto;
     }
 
 
 
-public Integer addToCart(Long productId, Integer userID) {
-    // Get the product
-    Product product = productRepository.findById(productId)
-            .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + productId));
-
-    // Get the user
-    User user = userRepository.findById(userID)
-            .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userID));
-
-    // Get or create the user's cart
-    Cart cart = user.getCart();
-    if (cart == null) {
-        cart = new Cart();
-        cart.setUser(user);
-        user.setCart(cart);
-    }
-
-    // Add the product to the cart
-    cart.addProduct(product);
-    user.setCart(cart);
-
-    // Save the user (and indirectly the cart and product associations)
-    userRepository.save(user);
-
-
-    // Return the updated product list from the cart
-    return cart.getProductList().size();
-}
+//public Integer addToCart(Long productId, Integer userID) {
+//    // Get the product
+//    Product product = productRepository.findById(productId)
+//            .orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + productId));
+//
+//    // Get the user
+//    User user = userRepository.findById(userID)
+//            .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userID));
+//
+//    // Get or create the user's cart
+//    Cart cart = user.getCart();
+//    if (cart == null) {
+//        cart = new Cart();
+//        cart.setUser(user);
+//        user.setCart(cart);
+//    }
+//
+//    // Add the product to the cart
+//    cart.addProduct(product);
+//    user.setCart(cart);
+//
+//    // Save the user (and indirectly the cart and product associations)
+//    userRepository.save(user);
+//
+//
+//    // Return the updated product list from the cart
+//    return cart.getProductList().size();
+//}
 
 
 }

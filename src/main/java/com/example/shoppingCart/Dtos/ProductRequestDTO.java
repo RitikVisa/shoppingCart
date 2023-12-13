@@ -4,7 +4,7 @@ import com.example.shoppingCart.models.Feature;
 
 public class ProductRequestDTO {
     private String name;
-    private double price;
+    private int price;
     private double rating;
     private String imageUrl;
     private String details;
@@ -23,7 +23,7 @@ public class ProductRequestDTO {
     public ProductRequestDTO() {
     }
 
-    public ProductRequestDTO(String name, double price, double rating, String imageUrl, String details,Feature feature) {
+    public ProductRequestDTO(String name, int price, double rating, String imageUrl, String details,Feature feature) {
         this.name = name;
         this.price = price;
         this.rating = rating;
@@ -43,11 +43,11 @@ public class ProductRequestDTO {
         this.name = name;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

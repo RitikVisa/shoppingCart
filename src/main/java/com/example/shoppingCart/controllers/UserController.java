@@ -1,8 +1,11 @@
 package com.example.shoppingCart.controllers;
 
 import com.example.shoppingCart.Dtos.UserRequestDto;
+import com.example.shoppingCart.models.Cart;
+import com.example.shoppingCart.models.Order;
 import com.example.shoppingCart.models.User;
 
+import com.example.shoppingCart.services.OrderService;
 import com.example.shoppingCart.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +21,16 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    OrderService orderService;
     @PostMapping
     public ResponseEntity<UserRequestDto> createUser(@RequestBody User userRequest) {
 
         return userService.createUser(userRequest);
     }
+
+
 
     @GetMapping
     public ResponseEntity<List<UserRequestDto>> getAllUsers() {
@@ -41,11 +49,14 @@ public class UserController {
     }
 
     @PostMapping("/addtocart")
-    public ResponseEntity<Integer> addToCart(
-            @RequestParam(name = "pid") Long productId,
-            @RequestParam(name = "uid") Integer userID) {
-            Integer result = userService.addToCart(productId,userID);
-        return new ResponseEntity<Integer>(result, HttpStatus.OK);
+    public List<Cart> addToCart(@RequestParam(name = "uid") int uid, @RequestParam(name = "pid") int pid, @RequestParam(name = "quantity") int quantity){
+        return orderService.addToCart(uid,pid,quantity);
     }
+
+    @DeleteMapping("/removeItem")
+    public List<Cart> removeItemFromCart(@RequestParam(name = "uid") int uid, @RequestParam(name = "pid") int pid, @RequestParam(name = "quantity") int quantity){
+        return orderService.removeItemFromCart(uid,pid,quantity);
+    }
+
 
 }

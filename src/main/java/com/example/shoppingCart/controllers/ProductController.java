@@ -36,21 +36,21 @@ public class ProductController {
 
     // Get a product by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<Product> getProductById(@PathVariable int id) {
         Product product = productService.getProductById(id);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     // Update a product by ID with or without feature
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDTO productRequest) {
+    public ResponseEntity<Product> updateProduct(@PathVariable int id, @RequestBody ProductRequestDTO productRequest) {
         Product updatedProduct = productService.updateProduct(id, productRequest);
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 
     // Delete a product by ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

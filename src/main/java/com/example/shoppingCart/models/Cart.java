@@ -1,42 +1,88 @@
 package com.example.shoppingCart.models;
 
-import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.ToString;
 
+@ToString
 @Entity
 public class Cart {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private List<Product> productList;
+    private int productId;
+    private String productName;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    // ... constructors, getters, setters ...
+    private int quantity;
+    private int amount;
 
     public Cart() {
-        this.productList = new ArrayList<>();
     }
 
-    public void addProduct(Product product) {
-        productList.add(product);
-        product.setCart(this);
+    public Cart(int productId, String productName, int quantity, int amount) {
+        this.productId = productId;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.amount = amount;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-        user.setCart(this);
+    public Cart(int productId, int quantity) {
+        this.productId = productId;
+        this.quantity = quantity;
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public int getId() {
+        return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingCart{" +
+                "id=" + id +
+                ", productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", quantity=" + quantity +
+                ", amount=" + amount +
+                '}';
+    }
 }

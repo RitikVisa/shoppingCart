@@ -11,10 +11,10 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String name;
-    private double price;
+    private int price;
     private double rating;
     private String imageUrl;
     private String details;
@@ -23,15 +23,24 @@ public class Product {
     @JoinColumn(name = "feature_id")
     private Feature feature; // One-to-one relationship with Feature
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+//    @ManyToOne
+//    @JoinColumn(name = "cart_id")
+//    Cart cart;
+//
+//    @JsonBackReference
+//    public Cart getCart() {
+//        return cart;
+//    }
+
+//    public void setCart(Cart cart) {
+//        this.cart = cart;
+//    }
 
     // Default constructor
     public Product() {
     }
 
-    public Product(String name, double price, double rating, String imageUrl, String details, Feature feature) {
+    public Product(String name, int price, double rating, String imageUrl, String details, Feature feature) {
         this.name = name;
         this.price = price;
         this.rating = rating;
@@ -42,11 +51,11 @@ public class Product {
 
     // Getters and setters for the fields
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -58,11 +67,11 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
@@ -98,13 +107,7 @@ public class Product {
         this.feature = feature;
     }
 
-    public Cart getCart() {
-        return cart;
-    }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
 
     @Override
     public String toString() {
@@ -116,7 +119,7 @@ public class Product {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", details='" + details + '\'' +
                 ", feature=" + feature +
-                ", cart=" + cart +
+
                 '}';
     }
 }

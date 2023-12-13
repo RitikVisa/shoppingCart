@@ -21,7 +21,7 @@ public class ProductService {
     public Product createProduct(ProductRequestDTO productRequest) {
         Product product = new Product();
         product.setName(productRequest.getName());
-        product.setPrice(productRequest.getPrice());
+        product.setPrice((int) productRequest.getPrice());
         product.setDetails(productRequest.getDetails());
         product.setImageUrl(productRequest.getImageUrl());
         product.setDetails(productRequest.getDetails());
@@ -45,11 +45,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product getProductById(Long id) {
+    public Product getProductById(int id) {
         return productRepository.findById(id).orElse(null);
     }
 
-    public Product updateProduct(Long id, ProductRequestDTO updatedProduct) {
+    public Product updateProduct(int id, ProductRequestDTO updatedProduct) {
         Product existingProduct = getProductById(id);
         if (existingProduct == null) {
             return null; // Product not found
@@ -73,7 +73,7 @@ public class ProductService {
         return productRepository.save(existingProduct);
     }
 
-    public void deleteProduct(Long id) {
+    public void deleteProduct(int id) {
         productRepository.deleteById(id);
     }
 }
